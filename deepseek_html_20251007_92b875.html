@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重叠卡片布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 1.2rem;
+        }
+        
+        .card-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+        }
+      
+        .card {
+            width: 280px;
+            height: 380px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-left: -40px; 
+            /* 卡片重叠的关键 */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 为每个卡片设置不同的背景色和z-index */
+        .card:nth-child(1) {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            z-index: 1;
+        }
+        
+        .card:nth-child(2) {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            z-index: 2;
+        }
+        
+        .card:nth-child(3) {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            z-index: 3;
+        }
+        
+        .card:nth-child(4) {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            z-index: 4;
+        }
+        
+        /* 悬停效果 */
+        .card:hover {
+            transform: translateY(-20px) scale(1.05);
+            z-index: 10; /* 悬停时提升到最上层 */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 卡片图标 */
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 30px;
+            color: white;
+        }
+        
+        /* 卡片标题 */
+        .card-title {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        /* 卡片内容 */
+        .card-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        /* 卡片底部按钮 */
+        .card-footer {
+            margin-top: 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .card-btn {
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+        
+        .card-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1100px) {
+            .card {
+                width: 240px;
+                height: 350px;
+                margin-left: -30px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .card {
+                width: 200px;
+                height: 320px;
+                margin-left: -25px;
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                width: 85%;
+                max-width: 350px;
+                margin-left: 0;
+                margin-bottom: -50px; /* 垂直方向重叠 */
+                z-index: 5; /* 重置z-index */
+            }
+            
+            .card:hover {
+                transform: translateY(-10px) scale(1.03);
+                z-index: 10;
+            }
+        }
+        
+        /* 装饰元素 */
+        .decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            top: -75px;
+            right: -75px;
+        }
+        
+        /* 信息面板 */
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 50px;
+            max-width: 800px;
+            color: white;
+        }
+        
+        .info-panel h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .info-panel p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>重叠卡片布局</h1>
+        <p class="subtitle">使用 CSS Flexbox 和 z-index 创建优雅的重叠效果</p>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="decoration"></div>
+                <div class="card-icon">💡</div>
+                <h2 class="card-title">创意设计</h2>
+                <p class="card-content">探索无限创意可能性，打造独特视觉体验。我们的设计理念融合美学与功能。</p>
+                <div class="card-footer">
+                    <button class="card-btn">了解更多</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="decoration"></div>
+                <div class="card-icon">🚀</div>
+                <h2 class="card-title">高效开发</h2>
+                <p class="card-content">采用最新技术栈，确保项目高效交付。专注于性能优化和用户体验。</p>
+                <div class="card-footer">
+                    <button class="card-btn">了解更多</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="decoration"></div>
+                <div class="card-icon">📱</div>
+                <h2 class="card-title">响应式布局</h2>
+                <p class="card-content">完美适配各种设备屏幕，提供一致的用户体验。从手机到桌面，无缝切换。</p>
+                <div class="card-footer">
+                    <button class="card-btn">了解更多</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="decoration"></div>
+                <div class="card-icon">🎨</div>
+                <h2 class="card-title">交互体验</h2>
+                <p class="card-content">精心设计的交互动画，增强用户参与感。流畅的过渡和微交互提升满意度。</p>
+                <div class="card-footer">
+                    <button class="card-btn">了解更多</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h2>实现原理</h2>
+            <p>这个重叠卡片布局主要通过以下 CSS 属性实现：</p>
+            <ul>
+                <li><strong>display: flex</strong> - 创建弹性容器</li>
+                <li><strong>margin-left: -40px</strong> - 负边距使卡片重叠</li>
+                <li><strong>z-index</strong> - 控制卡片的层叠顺序</li>
+                <li><strong>transition</strong> - 添加悬停动画效果</li>
+            </ul>
+            <div class="code-block">
+.card-container {
+  display: flex;
+}
+
+.card {
+  margin-left: -40px; /* 卡片重叠的关键 */
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-20px);
+  z-index: 10; /* 悬停时提升到最上层 */
+}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加一些简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                // 点击卡片时添加脉冲动画
+                card.addEventListener('click', function() {
+                    this.style.animation = 'pulse 0.5s';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 500);
+                });
+                
+                // 键盘导航支持
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        this.querySelector('.card-btn').click();
+                    }
+                });
+            });
+            
+            // 为按钮添加点击效果
+            const buttons = document.querySelectorAll('.card-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    alert('您点击了: ' + this.closest('.card').querySelector('.card-title').textContent);
+                });
+            });
+        });
+        
+        // 添加脉冲动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
