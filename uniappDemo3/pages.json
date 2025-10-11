@@ -5,6 +5,24 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path": "pages/routerDemo/routerDemo",
+			"style": {
+				"navigationBarTitleText": "路由API演示"
+			}
+		},
+		{
+			"path": "pages/eventChannelDemo/eventChannelDemo",
+			"style": {
+				"navigationBarTitleText": "EventChannel演示"
+			}
+		},
+		{
+			"path": "pages/webViewDemo/webViewDemo",
+			"style": {
+				"navigationBarTitleText": "WebView演示"
+			}
 		}
 	],
 	"globalStyle": {

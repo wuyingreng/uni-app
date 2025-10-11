@@ -1,14 +1,6 @@
 {
-  "name": "uniappdemo3",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "unplugin-auto-import": "^20.2.0"
-  }
+ "devDependencies": {
+  "@dcloudio/vite-plugin-uni": "^3.0.0-alpha-3000020210521001",
+  "unplugin-auto-import": "^0.17.3"
+ }
 }
