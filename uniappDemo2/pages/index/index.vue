@@ -1,49 +1,20 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
-    </view>
-    <Header></Header>
+    <!-- <UserInfo username="咸虾米" avatar="../../static/pic1.jpg"></UserInfo>
+		<UserInfo avatar="../../static/pic2.jpg"></UserInfo>
+		<UserInfo :username="name"></UserInfo> -->
+
+    <UserInfo v-for="(item, index) in userinfo" :obj="item"></UserInfo>
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      title: "Hello",
-    };
-  },
-  onLoad() {},
-  methods: {},
-};
+<script setup>
+import { ref } from "vue";
+const userinfo = ref([
+  { name: "张三", avatar: "../../static/pic1.jpg" },
+  { name: "李四", avatar: "../../static/pic2.jpg" },
+  { name: "王五", avatar: "../../static/pic3.jpg" },
+]);
 </script>
 
-<style>
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
-}
-</style>
+<style></style>
